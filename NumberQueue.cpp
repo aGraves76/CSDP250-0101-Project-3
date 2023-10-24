@@ -26,9 +26,8 @@ void NumberQueue::enqueue(int binary)
 int NumberQueue::dequeue()
 {
     if (isEmpty())
-    {
-        throw underflow_error("Queue underflow");
-    }
+       throw underflow_error("Queue underflow");
+    
     Node* temp = front;
     front = front->next;
     int data = temp->bit;

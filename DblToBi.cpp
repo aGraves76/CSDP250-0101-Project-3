@@ -1,4 +1,4 @@
-// This is DblToBi.cpp
+// This is DoubleToBinary.cpp
 // Amanda Graves
 // CSDP 250-0101 Project 3
 //
@@ -9,38 +9,59 @@
 using namespace std;
 
 // global function declaration
-void doubleToBinary(double input);
+void doubleToBinary(double value, int precision);
 
 
 int main()
 {
-    doubleToBinary(14.625);
-    doubleToBinary(3.14159);
+    // convert using test data
+    doubleToBinary(14.625, 6);
+    doubleToBinary(3.14159, 10);
+   
+    // now with user input
+    double value;
+    int precision;
+   
+    cout << "Enter a positive decimal number: ";
+    cin >> value;
+   
+    if (value < 0)
+        value = 0;
+   
+    cout << "Enter the binary decimal precision: ";
+    cin >> precision;
+   
+    if (precision < 0)
+        precision = 0;
+
+    cout << endl;
+   
+    doubleToBinary(value, precision);
 
     return 0;
 }
 
 
 // global function definition
-void doubleToBinary(double input)
+void doubleToBinary(double value, int precision)
 {
-    // Step 1. Split input into integer & fractional parts
+    // Step 1. Split value into integer & fractional parts
 
-    // split the input
-    int inter = int(input);
-    double fract = input - inter;
+    // split the value
+    int inter = int(value);
+    double fract = value - inter;
    
     // print split results
-    cout << "Input:   \t" << input << endl;
+    cout << "Value:   \t" << value << endl;
     cout << "Integer: \t" << inter << endl;
     cout << "Decimal: \t" << fract << endl;
    
-    cout << "\nBinary:" << endl;
+    cout << "\nBinary (precision " << precision << "):" << endl;
 
 
     // Step 2. Convert the integer part to binary using a stack
    
-    // store results in myStack
+    // store results in a stack
     NumberStack myStack;
     while (inter > 0)
     {
@@ -49,35 +70,37 @@ void doubleToBinary(double input)
         inter /= 2;
     }
 
-    // print integer results from myStack
+    // print integer results from stack
     while (!myStack.isEmpty())
     {
         cout << myStack.pop();
     }
    
+       
+    // Step 3. Convert the fractional part to binary using a queue
    
-    // add a decimal piont
+    // add a decimal point
     cout << ".";
    
-   
-    // Step 3. Convert the fractional part to binary using a myQue
-   
-    // store results in a myQue
+    // store results in a queue
     NumberQueue myQue;
-    while (fract > 0.0)
+    int bitCount = 0;
+   
+    while (fract > 0.0 && precision > bitCount)
     {
-        int binary = 0;
+        int bit = 0;
         fract *= 2.0;
         if (fract >= 1)
         {
-            binary = 1;
+            bit = 1;
             fract -= 1;
         }
    
-        myQue.enqueue(binary);
+        myQue.enqueue(bit);
+        bitCount++;
     }
 
-    // print decimal results from myQue
+    // print decimal results from queue
     while (!myQue.isEmpty())
     {
         cout << myQue.dequeue();
@@ -85,6 +108,6 @@ void doubleToBinary(double input)
        
 
     // Step 4. Output results (already done).
-    cout << "\n\nDone.\n" << endl;
+    cout << "\n\nDone.\n\n" << endl;
     return;
 }

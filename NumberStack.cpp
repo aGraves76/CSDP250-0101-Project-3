@@ -18,9 +18,8 @@ void NumberStack::push(int binary)
 int NumberStack::pop()
 {
     if (isEmpty())
-    {
-        throw underflow_error("Stack underflow");
-    }
+       throw underflow_error("Stack underflow");
+    
     Node* temp = head;
     head = head->next;
     int binary = temp->bit;
