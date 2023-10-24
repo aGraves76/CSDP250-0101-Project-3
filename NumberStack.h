@@ -12,8 +12,10 @@ class NumberStack
     public:
         // constructor
         NumberStack()
+	{
           head = nullptr;
-           
+ 	}       
+   
         // destructor
         ~NumberStack()
         {
